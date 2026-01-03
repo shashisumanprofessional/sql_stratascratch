@@ -1,0 +1,216 @@
+--ID - 10308
+--Salaries Differences 
+--Calculates the difference between the highest salaries in the marketing and engineering departments. Output just the absolute difference in salaries.
+
+drop table db_dept;
+drop table db_employee;
+CREATE TABLE db_dept (
+    id INT PRIMARY KEY,
+    department VARCHAR(50)
+);
+
+CREATE TABLE db_employee (
+    id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    salary INT,
+    department_id INT,
+    FOREIGN KEY (department_id) REFERENCES db_dept(id)
+);
+
+
+
+INSERT INTO db_dept (id, department) VALUES
+(1, 'engineering'),
+(2, 'human resource'),
+(3, 'operation'),
+(4, 'marketing'),
+(5, 'sales'),
+(6, 'customer care');
+
+
+INSERT INTO db_employee (id, first_name, last_name, salary, department_id) VALUES
+(10301,'Keith','Morgan',27056,2),
+(10302,'Tyler','Booth',32199,3),
+(10303,'Clifford','Nguyen',32165,2),
+(10304,'Mary','Jones',49488,3),
+(10305,'Melissa','Lucero',27024,3),
+(10306,'Ashley','Li',28516,4),
+(10307,'Joseph','Solomon',19945,1),
+(10308,'Anthony','Sanchez',43801,3),
+(10309,'Katherine','Huffman',12984,4),
+(10310,'Dawn','Foley',28902,2),
+(10311,'Melissa','Holmes',33575,1),
+(10312,'Kathleen','Davis',44579,2),
+(10313,'Adam','Simmons',15442,6),
+(10314,'Desiree','Brewer',37494,6),
+(10315,'Sierra','Anderson',20592,6),
+(10316,'Beth','Torres',34902,1),
+(10317,'Pamela','Rodriguez',48187,4),
+(10318,'Jessica','Austin',43154,2),
+(10319,'Stephanie','Gamble',31160,2),
+(10320,'Gregory','Cook',22681,4),
+(10321,'Debra','Knapp',17844,5),
+(10322,'Paul','Horton',37431,3),
+(10323,'Henry','Solis',45269,4),
+(10324,'William','Brewer',15947,1),
+(10325,'Brian','Nelson',27006,1),
+(10326,'Randall','Kramer',20695,2),
+(10327,'Mary','Baker',46654,5),
+(10328,'Gene','Shepard',10143,3),
+(10329,'Christopher','Ramos',37710,4),
+(10330,'Robin','Horne',34679,3),
+(10331,'Alan','Wilson',43730,5),
+(10332,'Jessica','Mccall',40882,5),
+(10333,'Jennifer','Blankenship',13433,4),
+(10334,'Michael','Mitchell',19044,2),
+(10335,'Johnny','Fritz',40638,6),
+(10336,'Gloria','Krause',21670,3),
+(10337,'Jonathan','Holt',30267,2),
+(10338,'Anthony','Bullock',39362,6),
+(10339,'Robert','Mills',13188,1),
+(10340,'Joshua','Stephens',29339,3),
+(10341,'Alison','Hernandez',45144,3),
+(10342,'Derek','Morgan',11286,2),
+(10343,'Anthony','Morgan',15145,5),
+(10344,'Jenny','Owens',40606,4),
+(10345,'Elizabeth','Raymond',33050,5),
+(10346,'Philip','Jones',46356,2),
+(10347,'Seth','Gross',25681,5),
+(10348,'Edwin','Johnson',35144,5),
+(10349,'Ryan','Barnes',25085,1),
+(10350,'Patrick','Booth',39940,1),
+(10351,'Andrew','Lopez',18997,3),
+(10352,'Sarah','Mcknight',31082,5),
+(10353,'Patricia','Lawson',15808,1),
+(10354,'Taylor','Tucker',20225,3),
+(10355,'Aaron','Fischer',45787,1),
+(10356,'Wendy','Brown',30432,4),
+(10357,'Michael','Robertson',47657,5),
+(10358,'Edward','Wolf',45649,1),
+(10359,'Jacob','Brown',28782,6),
+(10360,'Randy','Lee',45121,4),
+(10361,'Xavier','Pace',18842,3),
+(10362,'Anita','Chen',19669,6),
+(10363,'David','Chapman',15426,4),
+(10364,'Elijah','Potter',44472,2),
+(10365,'Craig','West',37278,1),
+(10366,'Heather','Schroeder',40546,3),
+(10367,'Jeremy','Phillips',36605,4),
+(10368,'William','Hall',20534,4),
+(10369,'Kimberly','White',31456,3),
+(10370,'Susan','Fisher',32308,1),
+(10371,'Deborah','Duncan',18517,6),
+(10372,'Lawrence','Smith',11636,3),
+(10373,'Meghan','Martinez',12993,2),
+(10374,'Paige','Mills',19448,6),
+(10375,'Michael','Johnson',34888,6),
+(10376,'Lori','Burns',14603,3),
+(10377,'Stephanie','Chavez',30196,4),
+(10378,'Luis','Sheppard',23532,6),
+(10379,'Rebecca','Turner',28312,2),
+(10380,'Justin','Jones',31170,6),
+(10381,'Stephanie','Mejia',11913,3),
+(10382,'Sharon','Liu',34620,5),
+(10383,'Jonathan','Lester',30517,2),
+(10384,'Olivia','Hoffman',44696,3),
+(10385,'Michelle','Miller',36911,2),
+(10386,'Jacob','Carr',20676,2),
+(10387,'Ashley','Todd',49926,6),
+(10388,'Michael','Harvey',18280,3),
+(10389,'Anthony','Molina',26304,3),
+(10390,'Maria','Warren',20599,5),
+(10391,'Kenneth','Smith',28762,6),
+(10392,'Melissa','Nichols',35266,4),
+(10393,'Lori','Page',24569,3),
+(10394,'Jacqueline','Stewart',41454,4),
+(10395,'Victor','Robinson',28034,6),
+(10396,'Meghan','Henderson',28733,2),
+(10397,'Heather','Kelly',42487,6),
+(10398,'Alexander','Abbott',15334,2),
+(10399,'Christopher','Ryan',33224,3),
+(10400,'Chelsea','Gonzalez',20785,1);
+
+
+select * from db_employee;
+select * from db_dept;
+
+
+select max(salary) from db_employee where department_id=1;
+select max(salary) from db_employee where department_id=4;
+
+
+
+select 
+abs(
+max(case when dbd.department = 'marketing' then (dbe.salary) end)-
+max(case when dbd.department = 'engineering' then (dbe.salary) end)
+) as salary_difference 
+from db_employee dbe join db_dept dbd
+on dbe.department_id =dbd.id
+where dbd.department='engineering' or
+dbd.department ='marketing';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select 
+abs (
+max(CASE WHEN dbd.department='marketing' then (dbe.salary) end)-
+max(CASE WHEN dbd.department='engineering' then (dbe.salary) end)
+	
+   ) as salary_difference
+ from db_employee dbe join db_dept dbd
+on dbe.department_id=dbd.id
+
+
+select 
+abs (
+max(CASE WHEN dbd.department='marketing' then (dbe.salary) end)-
+max(CASE WHEN dbd.department='engineering' then (dbe.salary) end)
+	
+   ) as salary_difference
+ from db_employee dbe join db_dept dbd
+on dbe.department_id=dbd.id
+where dbd.department='marketing' or 
+ dbd.department='engineering' ;
+
+ select * from db_employee;
+select * from db_dept;
+
+select abs(m.max_salary - e.max_salary ) as salary_difference 
+from 
+  (
+ select max(dbe.salary) as max_salary
+ from db_employee dbe join db_dept dbd
+ on dbe.department_id=dbd.id
+ where dbd.department = 'marketing' 
+ ) m,
+( 
+select max(dbe.salary) as max_salary
+from db_employee dbe join db_dept dbd
+ on dbe.department_id=dbd.id
+ where dbd.department = 'engineering'
+ ) e;
+
